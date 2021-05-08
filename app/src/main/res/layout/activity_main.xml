@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="298dp"
+        android:layout_weight="10"
+        tools:listitem="@layout/product_row">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_weight="30">
+
+        <EditText
+            android:id="@+id/prodcutInput"
+            android:textSize="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="PRODUCT"
+            android:imeOptions="actionDone"/>
+        <EditText
+            android:id="@+id/amountInput"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:hint="AMOUNT"
+            android:imeOptions="actionDone"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitData"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="30"
+        android:textAlignment="center"
+        android:text="Add"/>
+
+
+
+</LinearLayout>

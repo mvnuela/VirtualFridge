@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "399781322957",
+    "project_id": "virtualfridge-47aca",
+    "storage_bucket": "virtualfridge-47aca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399781322957:android:cf72c911db33c80eb2c984",
+        "android_client_info": {
+          "package_name": "com.am.virtualfridge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399781322957-ppo6ktooulp4rn80d56baqbsnhgcl1o6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtiSPDCPDoZ8rhxdu2WEyiHrTyOSxPDoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399781322957-ppo6ktooulp4rn80d56baqbsnhgcl1o6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
