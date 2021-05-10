@@ -1,11 +1,8 @@
 package com.am.virtualfridge
 
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.inputmethod.InputMethodManager
+import android.util.Log
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,61 +16,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var myRef: DatabaseReference
     private lateinit var recyclerView: RecyclerView
     private lateinit var submit: Button
-    private lateinit var productInp: EditText
-    private lateinit var amonutInp: EditText
     private lateinit var listOfProducts:ArrayList<Product>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         myRef = firebase.getReference("ArrayDate")
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        submit = findViewById<Button>(R.id.submitData)
-        productInp = findViewById<EditText>(R.id.prodcutInput)
-        amonutInp = findViewById<EditText>(R.id.amountInput)
+        recyclerView = findViewById(R.id.recyclerView)
+        submit = findViewById(R.id.submitDate)
         recyclerView.layoutManager= GridLayoutManager(applicationContext, 1)
-
- // listenery, po kliknieciu enter po wpisaniu danych do EditTextow klawiatura znika,
-        // trzeba pamietac zeby pozniej usunac entera, bo wywali blad jak bedziemy chcieli dodac do bazy
-        productInp.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER) {
-                val `in` = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                `in`.hideSoftInputFromWindow(
-                    productInp.getApplicationWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS
-                )
-            }
-            false
-        })
-
-        amonutInp.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER) {
-                val `in` = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                `in`.hideSoftInputFromWindow(
-                    amonutInp.getApplicationWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS
-                )
-            }
-            false
-        })
-
-        //listener buttona, którym dodajemy dane
         submit.setOnClickListener{
-
-           val produkt: String = productInp.text.toString()
-           val am: Int = amonutInp.text.toString().toInt()
-           val firebaseInput = Product(produkt, am)
-            myRef.child("${Date().time}").setValue(firebaseInput)
-            productInp.text=null
-            amonutInp.text=null
-
+            AddProductDialog(this).show()
         }
+
 
        myRef.addValueEventListener(object : ValueEventListener {
            override fun onCancelled(databaseError: DatabaseError) {
-               TODO("Not yet implemented")
+               Log.e("Firebase", "Small error")
            }
 
            override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -86,10 +46,83 @@ class MainActivity : AppCompatActivity() {
            }
 
        })
+
+
+
     }
 
     private fun setupAdapter(arrayData: ArrayList<Product>){
-        recyclerView.adapter=Adapter(arrayData)
+        recyclerView.adapter=Adapter(arrayData, this)
     }
 
+
+    //cos jak static, smialo mogloby to byc w klasie firebase
+    companion object {
+        private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
+        private var myRef = firebase.getReference("ArrayDate")
+        fun addUpdateProduct(product: Product) {
+
+            val query = myRef.orderByChild("name")
+                .equalTo(product.name)
+
+            query.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (i in dataSnapshot.children) {
+                        val item = i.getValue(Product::class.java)
+                        if (item != null) {
+                            i.key?.let { myRef.child(it).setValue(Product(product.name, product.amount + item.amount)) }
+                            return
+                        }
+                    }
+                    myRef.child("${Date().time}").setValue(product)
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("Firebase", "Small error")
+                }
+            })
+        }
+
+
+        fun editProduct(product: Product) {
+            val query = myRef.orderByChild("name")
+                .equalTo(product.name)
+
+            query.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (i in dataSnapshot.children) {
+                        val item = i.getValue(Product::class.java)
+                        if (item != null) {
+                            i.key?.let { myRef.child(it).setValue(Product(product.name, product.amount)) }
+                            return
+                        }
+                    }
+                }
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("Firebase", "Small error")
+                }
+            })
+
+        }
+
+        fun deleteProduct(product: Product) {
+            val query = myRef.orderByChild("name")
+                .equalTo(product.name)
+
+            query.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (i in dataSnapshot.children) {
+                        val item = i.getValue(Product::class.java)
+                        if (item != null) {
+                            i.key?.let { myRef.child(it).removeValue() }
+                            return
+                        }
+                    }
+                }
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("Firebase", "Small error")
+                }
+            })
+        }
     }
+}
