@@ -37,14 +37,14 @@ class EditProductDialog(context: Context, val name: String, private val amount: 
         binding.ivDelete.setOnClickListener {
             val item = Product(binding.tvName.text.toString().toLowerCase(Locale.ROOT),
                 binding.etAmount.text.toString().toInt())
-            MainActivity.deleteProduct(item)
+            MyFridgeActivity.deleteProduct(item)
             dismiss()
         }
 
         binding.tvEdit.setOnClickListener {
             val item = Product(binding.tvName.text.toString().toLowerCase(Locale.ROOT),
                 binding.etAmount.text.toString().toInt())
-            MainActivity.editProduct(item)
+            MyFridgeActivity.editProduct(item)
             dismiss()
         }
     }

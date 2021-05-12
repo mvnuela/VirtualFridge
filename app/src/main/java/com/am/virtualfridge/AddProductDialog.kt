@@ -37,7 +37,7 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
 
             //robie zeby wszystko bylo z malej litery
             val item = Product(name.toLowerCase(Locale.ROOT), amount.toInt())
-            MainActivity.addUpdateProduct(item)
+            MyFridgeActivity.addUpdateProduct(item)
             dismiss()
         }
 
