@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtualFridge">
-        <activity android:name=".MyFridgeActivity"></activity>
+        <activity android:name=".SearchReceiptsActivity"></activity>
+        <activity android:name=".MyFridgeActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,6 +1,7 @@
 package com.am.virtualfridge
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         /* tu bedzie uruchamianie aktywnosci z zapisanymi przepisami */
     }
 
-    fun searchRecepits(){
-        TODO()
-        /*tu bedzie uruchamianie aktywnosci z szukaniem przepisow */
+    fun searchRecepits(view : View){
+        val myintent = Intent(this,SearchReceiptsActivity::class.java)
+        startActivity(myintent)
     }
 }
