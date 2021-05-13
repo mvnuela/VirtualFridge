@@ -6,28 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".SearchReceiptsActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+    <fragment
+        android:id="@+id/fragmentWebPage"
+        android:name="com.am.virtualfridge.WebPageFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentWebApp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout="@layout/fragment_web_page" />
+
+    <fragment
+        android:id="@+id/fragmentWebApp"
+        android:name="com.am.virtualfridge.WebAppFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <fragment
-            android:id="@+id/fragmentWebPage"
-            android:name="com.am.virtualfridge.WebPageFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_web_page" />
-
-        <fragment
-            android:id="@+id/fragmentWebApp"
-            android:name="com.am.virtualfridge.WebAppFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_web_app" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/fragmentWebPage"
+        tools:layout="@layout/fragment_web_app" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
