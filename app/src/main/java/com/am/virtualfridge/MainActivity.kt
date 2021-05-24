@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun searchRecepits(view : View){
+        Log.i("haslo" , "szukam")
         val myintent = Intent(this,SearchReceiptsActivity::class.java)
         startActivity(myintent)
     }
