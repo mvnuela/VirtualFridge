@@ -11,8 +11,10 @@
         android:theme="@style/Theme.VirtualFridge">
         <activity android:name=".SearchReceiptsActivity"></activity>
         <activity android:name=".MyFridgeActivity" />
-        <activity android:name=".AddProductActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
