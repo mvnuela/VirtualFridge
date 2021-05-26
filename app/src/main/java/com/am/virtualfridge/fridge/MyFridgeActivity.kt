@@ -69,7 +69,7 @@ class MyFridgeActivity : AppCompatActivity() {
             /**
              * sprawdzam czy produkt o pdanej nazwie i dacie waznosci znajduje sie w fireabasie
              */
-            val query = myRef.child(user).orderByChild("name").equalTo(product.name)
+            val query = myRef.orderByChild("name").equalTo(product.name)
             /**
              * jezeli dany produkt sie pojawia, to zwiekszam jego illosc w bazie danych w product.amount + item.amount
              * a jezeli nie to dadaje go do bazy danych
@@ -78,6 +78,7 @@ class MyFridgeActivity : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (i in dataSnapshot.children) {
                         val item = i.getValue(Product::class.java)
+                        Log.d("Data", i.toString())
                         if (item != null) {
                             //robie, zeby produkty o tym samych parametrach sie zsumowaly, niestety w zjeba... realtime firebasie byl z tym problem i nie mozna bylo uzyc w kwerendzie, firestore > realtime
                             if (item.dayOfMonth == product.dayOfMonth && item.month == product.month && item.year == product.year) {
@@ -101,7 +102,7 @@ class MyFridgeActivity : AppCompatActivity() {
          * mozliwosc zmiany parametrow produkty, jak ilosci czy daty waznosci
          */
         fun editProduct(newProduct: Product, oldProduct: Product) {
-            val query = myRef.child(user).orderByChild("name")
+            val query = myRef.orderByChild("name")
                 .equalTo(oldProduct.name)
 
             query.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -124,7 +125,7 @@ class MyFridgeActivity : AppCompatActivity() {
         }
 
         fun deleteProduct(product: Product) {
-            val query = myRef.child(user).orderByChild("name")
+            val query = myRef.orderByChild("name")
                 .equalTo(product.name)
 
             query.addListenerForSingleValueEvent(object : ValueEventListener {
