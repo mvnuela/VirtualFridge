@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtualFridge">
         <activity android:name=".SearchReceiptsActivity"></activity>
-        <activity android:name=".MyFridgeActivity" />
+        <activity android:name=".StartActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".StartActivity">
+        <activity android:name=".fridge.MyFridgeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

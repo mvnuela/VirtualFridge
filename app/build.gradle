@@ -24,7 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    //crys, zmienilem bo mi nie dzialalo
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -34,7 +33,6 @@ android {
     }
 
 
-    //crys, dodalem, by moc uzywac viewBinding
     buildFeatures {
         viewBinding true
     }

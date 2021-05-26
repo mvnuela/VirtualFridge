@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.am.virtualfridge.fridge.MyFridgeActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth

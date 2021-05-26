@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.Toast
 //import android.widget.Toolbar
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.rengwuxian.materialedittext.MaterialEditText
 import androidx.appcompat.widget.Toolbar;
+import com.am.virtualfridge.fridge.MyFridgeActivity
 
 class RegisterActivity : AppCompatActivity() {
 

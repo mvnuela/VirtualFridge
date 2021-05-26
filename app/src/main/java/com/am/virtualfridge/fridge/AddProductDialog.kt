@@ -1,7 +1,9 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.fridge
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogAddProductBinding
@@ -44,5 +46,17 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
         binding.tvCancel.setOnClickListener {
             cancel()
         }
+        //dodaje mozliwosc dodania daty waznosci produktu
+        binding.ivCalendar.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            MyDatePickerDialog(context, calendar.get(1), calendar.get(2), calendar.get(5)).show()
+        }
     }
+
+    companion object {
+        var selectedDay = 0
+        var selectedMonth = 0
+        var selectedYear = 0
+    }
+
 }

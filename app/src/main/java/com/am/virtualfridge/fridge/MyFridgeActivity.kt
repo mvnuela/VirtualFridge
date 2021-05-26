@@ -1,4 +1,4 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.fridge
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.am.virtualfridge.R
 import com.google.firebase.database.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,7 +51,7 @@ class MyFridgeActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter(arrayData: ArrayList<Product>){
-        recyclerView.adapter=Adapter(arrayData, this)
+        recyclerView.adapter= Adapter(arrayData, this)
     }
 
 

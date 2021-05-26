@@ -1,4 +1,4 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.fridge
 
 import android.content.Context
 import android.os.Bundle
