@@ -22,7 +22,7 @@ class MyFridgeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_fridge)
         val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        val user = FirebaseAuth.getInstance().currentUser.toString().filter { it != '.' }
+        val user = FirebaseAuth.getInstance().currentUser!!.uid
         myRef = firebase.getReference("ArrayDate").child(user)
         recyclerView = findViewById(R.id.recyclerView)
         submit = findViewById(R.id.submitDate)
@@ -63,7 +63,7 @@ class MyFridgeActivity : AppCompatActivity() {
      */
     companion object {
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        private val user = FirebaseAuth.getInstance().currentUser.toString().filter { it != '.' }
+        private val user = FirebaseAuth.getInstance().currentUser!!.uid
         private var myRef = firebase.getReference("ArrayDate").child(user)
         fun addUpdateProduct(product: Product) {
             /**
