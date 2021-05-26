@@ -40,9 +40,9 @@ class Adapter(private val productList:ArrayList<Product>, val context: Context):
             "ogórek" -> holder.imageView.setImageResource(R.drawable.cucumber)
             else -> holder.imageView.setImageResource(R.drawable.other)
         }
-
+        
         holder.itemView.setOnClickListener {
-            EditProductDialog(context, currentItem.name, currentItem.amount).show()
+            EditProductDialog(context, currentItem).show()
         }
     }
     override fun getItemCount()=productList.size

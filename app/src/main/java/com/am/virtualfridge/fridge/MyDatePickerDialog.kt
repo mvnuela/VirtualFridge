@@ -3,11 +3,14 @@ package com.am.virtualfridge.fridge
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.util.Log
 import android.widget.DatePicker
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedDay
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedMonth
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedYear
+
+/**
+ * nadpisuje DatePickerDialog, jedynie co zmieniam, ze przypisuje date do companion object w AddProductDialog
+ */
 
 class MyDatePickerDialog(context: Context, private var year: Int, private var month: Int, private var dayOfMonth: Int ) : DatePickerDialog(context, DateListener(), year, month, dayOfMonth) {
 

@@ -1,21 +1,20 @@
 package com.am.virtualfridge.fridge
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.DatePicker
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogAddProductBinding
 import java.util.*
 
 
-// tworze piekny dialog
+/**
+ * tworze dialog, w ktorym podaje sie nazwe produktu, jego ilosc i ewentualna date waznosci
+ * i daje mozliwosc dodania produktu do bazy danych
+ */
 
 class AddProductDialog(context: Context) : AppCompatDialog(context) {
-
-    // dodaje rozne takie
-
     private lateinit var binding: DialogAddProductBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +22,9 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
         binding = DialogAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        selectedYear = 0
+        selectedMonth = 0
+        selectedDay = 0
 
         binding.tvAdd.setOnClickListener {
             val name = binding.etName.text.toString()
@@ -38,7 +40,7 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
             }
 
             //robie zeby wszystko bylo z malej litery
-            val item = Product(name.toLowerCase(Locale.ROOT), amount.toInt())
+            val item = Product(name.toLowerCase(Locale.ROOT), amount.toInt(), selectedDay, selectedMonth, selectedYear)
             MyFridgeActivity.addUpdateProduct(item)
             dismiss()
         }
@@ -46,10 +48,21 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
         binding.tvCancel.setOnClickListener {
             cancel()
         }
-        //dodaje mozliwosc dodania daty waznosci produktu
+        /**
+         * mozliwosc dodania dazy waznosci produktu, w przyapdku gdy uzytkownik nie kliknie na kalendarz
+         * daja jest ustawiona na 0-0-0 i nie bedzie uwzgledniona przy powiadomieniach
+         */
+        var first = true
         binding.ivCalendar.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            MyDatePickerDialog(context, calendar.get(1), calendar.get(2), calendar.get(5)).show()
+            if (first) {
+                val calendar = Calendar.getInstance()
+                selectedDay = calendar.get(5)
+                selectedMonth = calendar.get(2) + 1
+                selectedYear = calendar.get(1)
+                Log.d("Data", "Halo")
+                first = false
+            }
+            MyDatePickerDialog(context, selectedYear, selectedMonth - 1, selectedDay).show()
         }
     }
 
