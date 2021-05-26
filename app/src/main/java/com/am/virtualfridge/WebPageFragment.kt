@@ -27,6 +27,7 @@ class WebPageFragment : Fragment() {
         return view
     }
     fun getLink(){
-        Log.i("haslo", "odebralem")
+        val mWebView : WebView = view!!.findViewById(R.id.webview)
+        Log.i("haslo", mWebView.url.toString())
     }
 }
