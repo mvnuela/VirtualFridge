@@ -17,12 +17,12 @@ class WebAppFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_web_app, container, false)
-        view.findViewById<Button>(R.id.AddtoFav).setOnClickListener{getLink(it)}
+      //  view.findViewById<Button>(R.id.AddtoFav).setOnClickListener{getLink(it)}
         return view
     }
     fun getLink(view: View){
         val frag = fragmentManager!!.findFragmentById(R.id.fragmentWebPage) as WebPageFragment
         Log.i("haslo", "wysylam")
-        frag.getLink();
+       // frag.getLink();
     }
 }
