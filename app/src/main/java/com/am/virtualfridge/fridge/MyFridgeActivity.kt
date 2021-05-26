@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,7 +22,8 @@ class MyFridgeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_fridge)
         val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        myRef = firebase.getReference("ArrayDate")
+        val user = FirebaseAuth.getInstance().currentUser.toString().filter { it != '.' }
+        myRef = firebase.getReference("ArrayDate").child(user)
         recyclerView = findViewById(R.id.recyclerView)
         submit = findViewById(R.id.submitDate)
         recyclerView.layoutManager= GridLayoutManager(applicationContext, 1)
@@ -59,15 +59,17 @@ class MyFridgeActivity : AppCompatActivity() {
 
     /**
      * wykorzysutje metode companion object, ktora dziala podobnie jak static w incie, zeby miec łatwy dostep do firebasu z innych klas
+     * kazdy uzytkownik posiada inna lodowke
      */
     companion object {
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        private var myRef = firebase.getReference("ArrayDate")
+        private val user = FirebaseAuth.getInstance().currentUser.toString().filter { it != '.' }
+        private var myRef = firebase.getReference("ArrayDate").child(user)
         fun addUpdateProduct(product: Product) {
             /**
              * sprawdzam czy produkt o pdanej nazwie i dacie waznosci znajduje sie w fireabasie
              */
-            val query = myRef.orderByChild("name").equalTo(product.name)
+            val query = myRef.child(user).orderByChild("name").equalTo(product.name)
             /**
              * jezeli dany produkt sie pojawia, to zwiekszam jego illosc w bazie danych w product.amount + item.amount
              * a jezeli nie to dadaje go do bazy danych
@@ -99,7 +101,7 @@ class MyFridgeActivity : AppCompatActivity() {
          * mozliwosc zmiany parametrow produkty, jak ilosci czy daty waznosci
          */
         fun editProduct(newProduct: Product, oldProduct: Product) {
-            val query = myRef.orderByChild("name")
+            val query = myRef.child(user).orderByChild("name")
                 .equalTo(oldProduct.name)
 
             query.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -122,7 +124,7 @@ class MyFridgeActivity : AppCompatActivity() {
         }
 
         fun deleteProduct(product: Product) {
-            val query = myRef.orderByChild("name")
+            val query = myRef.child(user).orderByChild("name")
                 .equalTo(product.name)
 
             query.addListenerForSingleValueEvent(object : ValueEventListener {
