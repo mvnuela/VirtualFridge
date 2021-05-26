@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".WebPageFragment">
 
     <WebView
@@ -11,5 +12,15 @@
         android:layout_height="wrap_content"
         />
 
+    <fragment
+        android:id="@+id/fragmentWebApp"
+        android:name="com.am.virtualfridge.WebAppFragment"
+        android:layout_width="302dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="109dp"
+        android:layout_marginBottom="30dp"
+        tools:layout="@layout/fragment_web_app" />
 
-</FrameLayout>
+
+</LinearLayout>

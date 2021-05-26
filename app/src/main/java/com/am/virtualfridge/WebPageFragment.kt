@@ -20,10 +20,11 @@ class WebPageFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_web_page, container, false)
         val mWebView : WebView = view.findViewById(R.id.webview)
-        mWebView.loadUrl("https://www.przepisy.pl");
+
         val webSettings = mWebView.settings
         webSettings.javaScriptEnabled = true
         mWebView.webViewClient = WebViewClient()
+        mWebView.loadUrl("https://www.przepisy.pl");
         return view
     }
     fun getLink(){

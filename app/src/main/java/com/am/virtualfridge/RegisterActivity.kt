@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
                         //TUTAJ MOZNA ZMIENIC AKTYWNOSC, ZEBY SIE INNA ODPALAŁA PO ZALOGOWANIU
                             //DOMYSLNIE ŁADUJE SIĘ LODÓWKA, ale nie ma opcji logout z tej aktywnosci
                                 //trzeba uruchomic od nowa appke
-                        val intent = Intent(this, MyFridgeActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.am.virtualfridge.SearchRecepitFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var reference: DatabaseReference
     private lateinit var viewpagerAdapter: ViewPagerAdapter
     lateinit var toolbar: Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,11 +44,11 @@ class MainActivity : AppCompatActivity() {
 
         val tableLayout = findViewById<TabLayout>(R.id.tab_layout)
         val viewPager = findViewById<ViewPager>(R.id.view_pager)
-        //viewpagerAdapter = ViewPagerAdapter(supportFragmentManager)
-//        viewpagerAdapter.addFragment(ChatsFragment(),"Chats")
-//        viewpagerAdapter.addFragment(UsersFragment(),"Users")
-//        viewPager.adapter=viewpagerAdapter
-//        tableLayout.setupWithViewPager(viewPager)
+        viewpagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        viewpagerAdapter.addFragment(MyFridgeFragment(),"MyFridge")
+        viewpagerAdapter.addFragment(WebPageFragment(),"Search recepits")
+        viewPager.adapter=viewpagerAdapter
+        tableLayout.setupWithViewPager(viewPager)
         }
 
 
