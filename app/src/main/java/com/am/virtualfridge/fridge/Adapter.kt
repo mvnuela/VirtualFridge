@@ -1,4 +1,4 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.fridge
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
+import com.am.virtualfridge.R
 import kotlin.collections.ArrayList
 
+
+/**
+ * adapter do recyclerview w MyFridgeFragment
+ * dla podstawowych produktow dodaje ich zdjecia
+ */
 
 class Adapter(private val productList:ArrayList<Product>, val context: Context): RecyclerView.Adapter<Adapter.ProductViewHolder>() {
 
@@ -19,8 +24,8 @@ class Adapter(private val productList:ArrayList<Product>, val context: Context):
     }
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val currentItem=productList[position]
-        holder.amountfProduct.text= currentItem.amount.toString()
-        holder.nameofProduct.text=currentItem.name
+        holder.amountOfProduct.text= currentItem.amount.toString()
+        holder.nameOfProduct.text=currentItem.name
         //podstawowe produkty
         when(currentItem.name) {
             "marchewka" -> holder.imageView.setImageResource(R.drawable.carrot)
@@ -35,9 +40,9 @@ class Adapter(private val productList:ArrayList<Product>, val context: Context):
             "ogórek" -> holder.imageView.setImageResource(R.drawable.cucumber)
             else -> holder.imageView.setImageResource(R.drawable.other)
         }
-
+        
         holder.itemView.setOnClickListener {
-            EditProductDialog(context, currentItem.name, currentItem.amount).show()
+            EditProductDialog(context, currentItem).show()
         }
     }
     override fun getItemCount()=productList.size
@@ -46,8 +51,8 @@ class Adapter(private val productList:ArrayList<Product>, val context: Context):
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         val imageView: ImageView = itemView.findViewById(R.id.ivProduct)
-        val nameofProduct: TextView = itemView.findViewById(R.id.tvName)
-        val amountfProduct: TextView = itemView.findViewById(R.id.tvAmount)
+        val nameOfProduct: TextView = itemView.findViewById(R.id.tvName)
+        val amountOfProduct: TextView = itemView.findViewById(R.id.tvAmount)
 
     }
 }
