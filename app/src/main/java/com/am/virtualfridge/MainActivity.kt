@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         viewpagerAdapter = ViewPagerAdapter(supportFragmentManager)
         viewpagerAdapter.addFragment(MyFridgeFragment(),"MyFridge")
         viewpagerAdapter.addFragment(WebPageFragment(),"Search recepits")
+        viewpagerAdapter.addFragment(ReceiptsFragment(),"Fav recepits")
         viewPager.adapter=viewpagerAdapter
         tableLayout.setupWithViewPager(viewPager)
         }
