@@ -1,7 +1,5 @@
 package com.am.virtualfridge
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +9,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.am.virtualfridge.receipts.AddReceiptDialog
 
 
 class WebPageFragment : Fragment() {
@@ -25,10 +24,11 @@ class WebPageFragment : Fragment() {
         val webSettings = mWebView.settings
         webSettings.javaScriptEnabled = true
         mWebView.webViewClient = WebViewClient()
-        mWebView.loadUrl("https://www.przepisy.pl");
+        mWebView.loadUrl("https://www.przepisy.pl")
         return view
     }
-    fun getLink(view: View){
+    private fun getLink(view: View) {
+        AddReceiptDialog(context!!, mWebView.url.toString()).show()
         Log.i("haslo", "odebralem")
         Log.i("haslo", mWebView.url.toString())
     }

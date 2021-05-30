@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
  * dla podstawowych produktow dodaje ich zdjecia
  */
 
-class Adapter(private val productList:ArrayList<Product>, val context: Context): RecyclerView.Adapter<Adapter.ProductViewHolder>() {
+class AdapterFridge(private val productList:ArrayList<Product>, val context: Context): RecyclerView.Adapter<AdapterFridge.ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.product_row,parent,false)

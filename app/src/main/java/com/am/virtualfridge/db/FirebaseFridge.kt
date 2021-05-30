@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.*
 
-class Firebase {
+class FirebaseFridge {
     /**
      * wykorzysutje metode companion object, ktora dziala podobnie jak static w incie, zeby miec łatwy dostep do firebasu z innych klas
      * kazdy uzytkownik posiada inna lodowke
@@ -17,7 +17,7 @@ class Firebase {
     companion object {
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         private val user = FirebaseAuth.getInstance().currentUser!!.uid
-        private var myRef = firebase.getReference("ArrayDate").child(user)
+        private var myRef = firebase.getReference("productsInFridge").child(user)
         fun addUpdateProduct(product: Product) {
             /**
              * sprawdzam czy produkt o pdanej nazwie i dacie waznosci znajduje sie w fireabasie

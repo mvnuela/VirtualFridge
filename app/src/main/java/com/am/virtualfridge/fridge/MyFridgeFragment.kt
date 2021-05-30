@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -27,10 +26,9 @@ class MyFridgeFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_my_fridge, container, false)
-
         val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef = firebase.getReference("ArrayDate").child(user)
+        myRef = firebase.getReference("productsInFridge").child(user)
         recyclerView = view.findViewById(R.id.recyclerView)
         submit = view.findViewById(R.id.submitDate)
         recyclerView.layoutManager= GridLayoutManager(context, 1)
@@ -62,7 +60,7 @@ class MyFridgeFragment : Fragment() {
 
     private fun setupAdapter(arrayData: ArrayList<Product>){
         try {
-            recyclerView.adapter = Adapter(arrayData, context!!)
+            recyclerView.adapter = AdapterFridge(arrayData, context!!)
         } catch (e: Exception) {
             Log.d("Adapter", "Error")
         }

@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogAddProductBinding
-import com.am.virtualfridge.db.Firebase
+import com.am.virtualfridge.db.FirebaseFridge
 import java.util.*
 
 
@@ -42,7 +42,7 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
 
             //robie zeby wszystko bylo z malej litery
             val item = Product(name.toLowerCase(Locale.ROOT), amount.toInt(), selectedDay, selectedMonth, selectedYear)
-            Firebase.addUpdateProduct(item)
+            FirebaseFridge.addUpdateProduct(item)
             dismiss()
         }
 
