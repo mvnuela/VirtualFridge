@@ -17,7 +17,7 @@ class MyDatePickerDialog(context: Context, private var year: Int, private var mo
     override fun onDateChanged(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         super.onDateChanged(view, year, month, dayOfMonth)
         this.year = year
-        this.month - month
+        this.month = month
         this.dayOfMonth = dayOfMonth
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogEditProductBinding
+import com.am.virtualfridge.db.Firebase
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedDay
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedMonth
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedYear
@@ -50,7 +51,7 @@ class EditProductDialog(context: Context, private val oldProduct: Product) : App
         binding.ivDelete.setOnClickListener {
             val item = Product(binding.tvName.text.toString().toLowerCase(Locale.ROOT),
                 binding.etAmount.text.toString().toInt())
-            MyFridgeFragment.deleteProduct(item)
+            Firebase.deleteProduct(item)
             dismiss()
         }
 
@@ -61,7 +62,7 @@ class EditProductDialog(context: Context, private val oldProduct: Product) : App
                 selectedMonth,
                 selectedYear
             )
-            MyFridgeFragment.editProduct(item, oldProduct)
+            Firebase.editProduct(item, oldProduct)
             dismiss()
         }
 
@@ -70,7 +71,7 @@ class EditProductDialog(context: Context, private val oldProduct: Product) : App
                 val calendar = Calendar.getInstance()
                 MyDatePickerDialog(context, calendar.get(1), calendar.get(2), calendar.get(5)).show()
             } else {
-                MyDatePickerDialog(context, oldProduct.year, oldProduct.month, oldProduct.dayOfMonth).show()
+                MyDatePickerDialog(context, oldProduct.year, oldProduct.month - 1, oldProduct.dayOfMonth).show()
             }
         }
 
