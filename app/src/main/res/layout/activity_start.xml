@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/primaryColor"
+    android:background="@drawable/lodowka"
+
     android:gravity="center"
     android:orientation="vertical"
     android:layout_height="match_parent"
@@ -12,25 +13,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chat App"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        />
+        android:text="Virtual Fridge"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/login"
+        android:layout_width="152dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="login"
-        android:layout_marginTop="100dp">
+        android:textColor="@color/black"
+        android:textStyle="bold">
 
     </Button>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/register"
-        android:text="register">
-    </Button>
+        android:layout_width="152dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="register"
+        android:textColor="@color/black"
+        android:textStyle="bold"></Button>
 
 </LinearLayout>

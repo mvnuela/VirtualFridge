@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.VirtualFridge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/lightGrey</item>
+        <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/darkGrey</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

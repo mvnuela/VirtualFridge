@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlin.collections.ArrayList
@@ -18,7 +19,7 @@ import kotlin.collections.ArrayList
 class MyFridgeFragment : Fragment() {
     private lateinit var myRef: DatabaseReference
     private lateinit var recyclerView: RecyclerView
-    private lateinit var submit: Button
+    private lateinit var submit: FloatingActionButton
     private lateinit var listOfProducts:ArrayList<Product>
 
 

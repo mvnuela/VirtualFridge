@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtualFridge">
         <activity android:name=".SearchReceiptsActivity"></activity>
-        <activity android:name=".MyFridgeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity"/>

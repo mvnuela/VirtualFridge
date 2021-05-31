@@ -10,6 +10,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.am.virtualfridge.receipts.AddReceiptDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class WebPageFragment : Fragment() {

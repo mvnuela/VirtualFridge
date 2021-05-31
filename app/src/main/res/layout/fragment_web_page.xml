@@ -6,16 +6,19 @@
     android:orientation="vertical"
     tools:context=".WebPageFragment">
 
+
     <Button
         android:id="@+id/addtoFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add to Fav" />
-
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+    </WebView>
+
+
 
 
 </LinearLayout>
