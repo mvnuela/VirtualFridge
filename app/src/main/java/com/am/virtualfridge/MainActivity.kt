@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.am.virtualfridge.db.FirebaseFridge
 import com.am.virtualfridge.fridge.MyFridgeFragment
@@ -52,16 +53,13 @@ class MainActivity : AppCompatActivity() {
         tableLayout.setupWithViewPager(viewPager)
 
         /**
-         * robie, zeby ustawilo username
-         * niestety job.join() nie dzialalo, dlatego uzywam taki brzydki kawał kodu
+         * zmienilem na liveData
          */
-        GlobalScope.launch {
-            while (FirebaseFridge.username == "Username") {
-            }
-            withContext(Dispatchers.Main) {
-                username.text = FirebaseFridge.username
-            }
+        val nameObserver = Observer<String> {
+            username.text = it
         }
+
+        FirebaseFridge.username.observe(this, nameObserver)
 
     }
 

@@ -1,6 +1,7 @@
 package com.am.virtualfridge.db
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.am.virtualfridge.fridge.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -15,7 +16,7 @@ class FirebaseFridge {
      * kazdy uzytkownik posiada inna lodowke
      */
     companion object {
-        var username = "Username"
+        var username = MutableLiveData<String> ("Username")
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         private val user = FirebaseAuth.getInstance().currentUser!!.uid
         private var myRef = firebase.getReference("productsInFridge").child(user)
@@ -104,7 +105,7 @@ class FirebaseFridge {
             val query = firebase.getReference("users").child(user)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    username = dataSnapshot.children.last().value.toString()
+                    username.value = dataSnapshot.children.last().value.toString()
                 }
                 override fun onCancelled(p0: DatabaseError) {
                     Log.e("Firebase", "Small error")
