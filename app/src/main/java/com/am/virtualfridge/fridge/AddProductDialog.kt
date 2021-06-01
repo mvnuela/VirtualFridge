@@ -1,8 +1,12 @@
 package com.am.virtualfridge.fridge
 
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogAddProductBinding
@@ -17,6 +21,7 @@ import java.util.*
 
 class AddProductDialog(context: Context) : AppCompatDialog(context) {
     private lateinit var binding: DialogAddProductBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,9 +73,17 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
     }
 
     companion object {
+
         var selectedDay = 0
         var selectedMonth = 0
         var selectedYear = 0
+
+        fun getDay() : Int {
+            return selectedDay
+        }
+
     }
+
+
 
 }
