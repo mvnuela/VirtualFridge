@@ -15,8 +15,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.am.virtualfridge.AlarmReceiver
 import com.am.virtualfridge.R
+import com.example.dialogpickerapp.AlarmReceiver
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -34,7 +34,7 @@ class MyFridgeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmIntent = PendingIntent.getBroadcast(context,0, Intent(context,AlarmReceiver::class.java),0)
+        alarmIntent = PendingIntent.getBroadcast(context,0, Intent(context, AlarmReceiver::class.java),0)
 
     }
 
@@ -66,7 +66,7 @@ class MyFridgeFragment : Fragment() {
                     listOfProducts.add(newRow!!)
                     if(!newRow.alarm){
 
-                       val  date = Calendar.Builder().setDate(newRow.year,newRow.month,newRow.dayOfMonth).setTimeOfDay(1,8,0).build()
+                       val  date = Calendar.Builder().setDate(newRow.year,newRow.month,newRow.dayOfMonth).setTimeOfDay(12,14,0).build()
                         alarmManager.set(AlarmManager.RTC_WAKEUP,date.time.time,alarmIntent)
                         newRow.alarm=true
                     }
