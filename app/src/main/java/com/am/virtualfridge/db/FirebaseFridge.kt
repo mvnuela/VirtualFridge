@@ -16,7 +16,7 @@ class FirebaseFridge {
      * kazdy uzytkownik posiada inna lodowke
      */
     companion object {
-        var username = MutableLiveData<String> ("Username")
+        var username = MutableLiveData<String> ("")
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         private val user = FirebaseAuth.getInstance().currentUser!!.uid
         private var myRef = firebase.getReference("productsInFridge").child(user)
