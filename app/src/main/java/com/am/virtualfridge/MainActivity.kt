@@ -2,6 +2,7 @@ package com.am.virtualfridge
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,12 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.am.virtualfridge.db.FirebaseFridge
 import com.am.virtualfridge.fridge.MyFridgeFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        FirebaseFridge.giveUsername()
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
@@ -47,7 +50,20 @@ class MainActivity : AppCompatActivity() {
         viewpagerAdapter.addFragment(ReceiptsFragment(),"Fav recepits")
         viewPager.adapter=viewpagerAdapter
         tableLayout.setupWithViewPager(viewPager)
+
+        /**
+         * robie, zeby ustawilo username
+         * niestety job.join() nie dzialalo, dlatego uzywam taki brzydki kawał kodu
+         */
+        GlobalScope.launch {
+            while (FirebaseFridge.username == "Username") {
+            }
+            withContext(Dispatchers.Main) {
+                username.text = FirebaseFridge.username
+            }
         }
+
+    }
 
 
 
