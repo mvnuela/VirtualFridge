@@ -1,4 +1,4 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.receipts
 
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.am.virtualfridge.fridge.AdapterFridge
+import com.am.virtualfridge.R
 import com.am.virtualfridge.fridge.Product
-import com.am.virtualfridge.receipts.Receipt
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class ReceiptsFragment : Fragment() {
@@ -21,11 +25,33 @@ class ReceiptsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_receipts, container, false)
+        val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
+        val user = FirebaseAuth.getInstance().currentUser!!.uid
+        val myRef = firebase.getReference("receipts").child(user)
+
         recycler = view.findViewById<RecyclerView>(R.id.recyclerViewReceipts)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("Firebase", "Small error")
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                listOfReceipts = ArrayList()
+                for (i in dataSnapshot.children) {
+                    val newRow = i.getValue(Receipt::class.java)
+                    listOfReceipts.add(newRow!!)
+                }
+                setupAdapter(listOfReceipts)
+            }
+
+        })
+
         return view
     }
+
 
     private fun setupAdapter(arrayData: ArrayList<Receipt>){
         try {

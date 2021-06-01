@@ -1,16 +1,12 @@
-package com.am.virtualfridge
+package com.am.virtualfridge.receipts
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.am.virtualfridge.fridge.AdapterFridge
-import com.am.virtualfridge.fridge.EditProductDialog
-import com.am.virtualfridge.fridge.Product
-import com.am.virtualfridge.receipts.Receipt
+import com.am.virtualfridge.R
 
 class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val context: Context) : RecyclerView.Adapter<FavReceiptsAdapter.ViewHolder> (){
 
@@ -21,7 +17,7 @@ class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val contex
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.receipt_row,parent,false)
-        return FavReceiptsAdapter.ViewHolder(itemView)
+        return ViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {

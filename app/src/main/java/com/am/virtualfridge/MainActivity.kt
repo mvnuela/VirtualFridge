@@ -2,7 +2,6 @@ package com.am.virtualfridge
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,6 +14,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.am.virtualfridge.db.FirebaseFridge
 import com.am.virtualfridge.fridge.MyFridgeFragment
+import com.am.virtualfridge.receipts.ReceiptsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
