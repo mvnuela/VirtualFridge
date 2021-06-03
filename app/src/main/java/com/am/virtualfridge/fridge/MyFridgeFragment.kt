@@ -1,22 +1,20 @@
 package com.am.virtualfridge.fridge
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
+import android.app.*
 import android.content.Context.*
 import android.content.Intent
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
-import com.example.dialogpickerapp.AlarmReceiver
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -29,12 +27,14 @@ class MyFridgeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var submit: FloatingActionButton
     private lateinit var listOfProducts:ArrayList<Product>
-    private lateinit var alarmManager: AlarmManager
-    private lateinit var alarmIntent: PendingIntent
+//    private lateinit var alarmManager: AlarmManager
+//    private lateinit var alarmIntent: PendingIntent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmIntent = PendingIntent.getBroadcast(context,0, Intent(context, AlarmReceiver::class.java),0)
+
+//        val id = System.currentTimeMillis()
+//        alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+//        alarmIntent = PendingIntent.getBroadcast(context, id.toInt(), Intent(context, AlarmReceiver::class.java),PendingIntent.FLAG_ONE_SHOT)
 
     }
 
@@ -64,22 +64,66 @@ class MyFridgeFragment : Fragment() {
                 for (i in dataSnapshot.children) {
                     val newRow = i.getValue(Product::class.java)
                     listOfProducts.add(newRow!!)
-                    if(!newRow.alarm){
-
-                       val  date = Calendar.Builder().setDate(newRow.year,newRow.month,newRow.dayOfMonth).setTimeOfDay(12,14,0).build()
-                        alarmManager.set(AlarmManager.RTC_WAKEUP,date.time.time,alarmIntent)
-                        newRow.alarm=true
-                    }
                 }
                 setupAdapter(listOfProducts)
             }
 
         })
 
+        myRef.addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val childName = p0.getValue(Product::class.java)!!.name
+                addnotification(childName)
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val childName = p0.getValue(Product::class.java)!!.name
+                deletenotification(childName)
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         return view
     }
 
+
+     fun addnotification(name : String){
+         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+             val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
+             val manager = context?.getSystemService(NotificationManager::class.java)
+             manager?.createNotificationChannel(channel)
+         }
+        val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText("Dodano produkt: " + name).
+        setSmallIcon(R.drawable.ic_add).setAutoCancel(true)
+
+         val managerCompat = NotificationManagerCompat.from(context!!)
+         managerCompat.notify(999,builder.build())
+     }
+
+    fun deletenotification(name : String){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
+            val manager = context?.getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+        }
+        val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText("Usunięto produkt: " + name).
+        setSmallIcon(R.drawable.ic_minus_foreground).setAutoCancel(true)
+
+        val managerCompat = NotificationManagerCompat.from(context!!)
+        managerCompat.notify(999,builder.build())
+    }
     private fun setupAdapter(arrayData: ArrayList<Product>){
         try {
             recyclerView.adapter = AdapterFridge(arrayData, context!!)
