@@ -38,6 +38,9 @@ class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val contex
             intent.putExtra("Url",currentItem.link)
             context.startActivity(intent)
         }
+        holder.rootView.findViewById<Button>(R.id.rm).setOnClickListener{
+            Log.i("usunalem","wykryto prosbe o usuniecie")
+        }
 
     }
 }
