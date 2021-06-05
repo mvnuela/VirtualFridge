@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
+import com.am.virtualfridge.db.FirebaseReceipts
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val context: Context) : RecyclerView.Adapter<FavReceiptsAdapter.ViewHolder> (){
 
@@ -39,7 +42,7 @@ class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val contex
             context.startActivity(intent)
         }
         holder.rootView.findViewById<Button>(R.id.rm).setOnClickListener{
-            Log.i("usunalem","wykryto prosbe o usuniecie")
+            FirebaseReceipts.deleteReceipt(currentItem)
         }
 
     }
