@@ -1,8 +1,9 @@
 package com.am.virtualfridge.fridge
 
-import android.app.*
-import android.content.Context.*
-import android.content.Intent
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,37 +16,63 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
+import com.am.virtualfridge.db.FirebaseFridge
+import com.am.virtualfridge.db.FirebaseFridge.Companion.myRef
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MyFridgeFragment : Fragment() {
-    private lateinit var myRef: DatabaseReference
     private lateinit var recyclerView: RecyclerView
     private lateinit var submit: FloatingActionButton
     private lateinit var listOfProducts:ArrayList<Product>
-//    private lateinit var alarmManager: AlarmManager
-//    private lateinit var alarmIntent: PendingIntent
+    private lateinit var sharedPref : SharedPreferences
+    private lateinit var editor : SharedPreferences.Editor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val id = System.currentTimeMillis()
-//        alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
-//        alarmIntent = PendingIntent.getBroadcast(context, id.toInt(), Intent(context, AlarmReceiver::class.java),PendingIntent.FLAG_ONE_SHOT)
+        //ustawiam sharedPref
+        sharedPref = this.activity?.getSharedPreferences("products", Context.MODE_PRIVATE)!!
+        editor = sharedPref.edit()
+        //
+        val sharedProducts = mutableListOf<String>()
+        for (i in 0 until sharedPref.all.size) {
+            sharedPref.getString("name$i", null)?.let { sharedProducts.add(it) }
+        }
 
+       myRef.addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val childName = p0.getValue(Product::class.java)!!.name
+
+                if (childName !in sharedProducts) {
+                    addnotification(childName)
+
+                }
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val childName = p0.getValue(Product::class.java)!!.name
+                deletenotification(childName)
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+        })
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_my_fridge, container, false)
-        val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        val user = FirebaseAuth.getInstance().currentUser!!.uid
-        myRef = firebase.getReference("productsInFridge").child(user)
         recyclerView = view.findViewById(R.id.recyclerView)
         submit = view.findViewById(R.id.submitDate)
         recyclerView.layoutManager= GridLayoutManager(context, 1)
@@ -70,32 +97,22 @@ class MyFridgeFragment : Fragment() {
 
         })
 
-        myRef.addChildEventListener(object : ChildEventListener{
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val childName = p0.getValue(Product::class.java)!!.name
-                addnotification(childName)
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-                val childName = p0.getValue(Product::class.java)!!.name
-                deletenotification(childName)
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
         return view
+    }
+
+    /**
+     * zapamietuje produkty, zeby sprawdzic co sie zmienilo od ostatniego razu
+     * przy onPause usuwam produkty i zapamietuje nowe
+     **/
+    override fun onPause() {
+        editor.clear().commit()
+        editor.apply {
+            for (item in listOfProducts.indices) {
+                putString("name$item", listOfProducts[item].name)
+                Log.d("sharedPref", "Added: ${listOfProducts[item].name}")
+            }
+        }.commit()
+        super.onPause()
     }
 
 

@@ -18,8 +18,8 @@ class FirebaseFridge {
     companion object {
         var username = MutableLiveData<String> ("")
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        private val user = FirebaseAuth.getInstance().currentUser!!.uid
-        private var myRef = firebase.getReference("productsInFridge").child(user)
+        val user = FirebaseAuth.getInstance().currentUser!!.uid
+        var myRef = firebase.getReference("productsInFridge").child(user)
         fun addUpdateProduct(product: Product) {
             /**
              * sprawdzam czy produkt o pdanej nazwie i dacie waznosci znajduje sie w fireabasie
