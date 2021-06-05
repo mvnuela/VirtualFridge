@@ -1,12 +1,16 @@
 package com.am.virtualfridge.fridge
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.DatePicker
+import androidx.core.content.ContextCompat.getSystemService
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedDay
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedMonth
 import com.am.virtualfridge.fridge.AddProductDialog.Companion.selectedYear
+import java.util.*
 
 /**
  * nadpisuje DatePickerDialog, jedynie co zmieniam, ze przypisuje date do companion object w AddProductDialog
@@ -32,8 +36,9 @@ class MyDatePickerDialog(context: Context, private var year: Int, private var mo
         super.updateDate(year - 1, month, dayOfMonth)
     }
 
-    class DateListener : OnDateSetListener {
+     class DateListener : OnDateSetListener {
         override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
         }
     }
 

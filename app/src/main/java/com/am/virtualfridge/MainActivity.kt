@@ -1,5 +1,8 @@
 package com.am.virtualfridge
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -112,24 +115,5 @@ class MainActivity : AppCompatActivity() {
     }
  }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//    }
-//
-//    fun showFridge(view: View){
-//        val myintent = Intent(this,MyFridgeActivity::class.java)
-//        startActivity(myintent)
-//    }
-//
-//    fun showRecepits(){
-//        TODO()
-//        /* tu bedzie uruchamianie aktywnosci z zapisanymi przepisami */
-//    }
-//
-//    fun searchRecepits(view : View){
-//        Log.i("haslo" , "szukam")
-//        val myintent = Intent(this,SearchReceiptsActivity::class.java)
-//        startActivity(myintent)
-//    }
+
 

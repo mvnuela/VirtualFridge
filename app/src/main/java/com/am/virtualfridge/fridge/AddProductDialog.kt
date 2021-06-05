@@ -1,8 +1,13 @@
 package com.am.virtualfridge.fridge
 
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import com.am.virtualfridge.databinding.DialogAddProductBinding
@@ -17,13 +22,14 @@ import java.util.*
 
 class AddProductDialog(context: Context) : AppCompatDialog(context) {
     private lateinit var binding: DialogAddProductBinding
+    private lateinit var alarmManager : AlarmManager
+    private lateinit var alarmIntent :PendingIntent
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DialogAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        selectedYear = 0
         selectedMonth = 0
         selectedDay = 0
 
@@ -43,6 +49,7 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
             //robie zeby wszystko bylo z malej litery
             val item = Product(name.toLowerCase(Locale.ROOT), amount.toInt(), selectedDay, selectedMonth, selectedYear)
             FirebaseFridge.addUpdateProduct(item)
+
             dismiss()
         }
 
@@ -68,9 +75,13 @@ class AddProductDialog(context: Context) : AppCompatDialog(context) {
     }
 
     companion object {
+
         var selectedDay = 0
         var selectedMonth = 0
         var selectedYear = 0
+
     }
+
+
 
 }
