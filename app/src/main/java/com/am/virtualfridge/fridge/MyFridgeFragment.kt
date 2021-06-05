@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,11 +15,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
-import com.am.virtualfridge.db.FirebaseFridge
 import com.am.virtualfridge.db.FirebaseFridge.Companion.myRef
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 
 class MyFridgeFragment : Fragment() {
@@ -29,13 +29,19 @@ class MyFridgeFragment : Fragment() {
     private lateinit var listOfProducts:ArrayList<Product>
     private lateinit var sharedPref : SharedPreferences
     private lateinit var editor : SharedPreferences.Editor
+
+    /**
+     * uzylem sharedPreferences, zeby aplikacja pamietala o produtkach ktore byly w niej ostatnio
+     * ustawiam, zeby powiadomienie o nowym produkcie pojawily sie przy ponownym otwarciu aplikacji
+     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //ustawiam sharedPref
         sharedPref = this.activity?.getSharedPreferences("products", Context.MODE_PRIVATE)!!
         editor = sharedPref.edit()
-        //
+        //tworze liste, ktora przy tworzeniu posluzy do porownania, ktore produkty ostatnio sie znajdowaly w lodowce
         val sharedProducts = mutableListOf<String>()
         for (i in 0 until sharedPref.all.size) {
             sharedPref.getString("name$i", null)?.let { sharedProducts.add(it) }
@@ -44,12 +50,9 @@ class MyFridgeFragment : Fragment() {
        myRef.addChildEventListener(object : ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val childName = p0.getValue(Product::class.java)!!.name
-
                 if (childName !in sharedProducts) {
-                    addnotification(childName)
-
+                    addNotification(childName)
                 }
-
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
@@ -57,7 +60,7 @@ class MyFridgeFragment : Fragment() {
 
             override fun onChildRemoved(p0: DataSnapshot) {
                 val childName = p0.getValue(Product::class.java)!!.name
-                deletenotification(childName)
+                deleteNotification(childName)
             }
 
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
@@ -77,9 +80,7 @@ class MyFridgeFragment : Fragment() {
         submit = view.findViewById(R.id.submitDate)
         recyclerView.layoutManager= GridLayoutManager(context, 1)
         submit.setOnClickListener{
-
             AddProductDialog(context!!).show()
-
         }
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
@@ -116,26 +117,26 @@ class MyFridgeFragment : Fragment() {
     }
 
 
-     fun addnotification(name : String){
-         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-             val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
-             val manager = context?.getSystemService(NotificationManager::class.java)
-             manager?.createNotificationChannel(channel)
-         }
-        val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText("Dodano produkt: " + name).
+     fun addNotification(name : String){
+         val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
+         val manager = context?.getSystemService(NotificationManager::class.java)
+         manager?.createNotificationChannel(channel)
+         val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText(
+            "Dodano produkt: $name"
+        ).
         setSmallIcon(R.drawable.ic_add).setAutoCancel(true)
 
          val managerCompat = NotificationManagerCompat.from(context!!)
          managerCompat.notify(999,builder.build())
      }
 
-    fun deletenotification(name : String){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
-            val manager = context?.getSystemService(NotificationManager::class.java)
-            manager?.createNotificationChannel(channel)
-        }
-        val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText("Usunięto produkt: " + name).
+    fun deleteNotification(name : String){
+        val channel = NotificationChannel("n","n",NotificationManager.IMPORTANCE_HIGH)
+        val manager = context?.getSystemService(NotificationManager::class.java)
+        manager?.createNotificationChannel(channel)
+        val builder =  NotificationCompat.Builder(context!!,"n").setContentTitle("Zmiany w lodówce!").setContentText(
+            "Usunięto produkt: $name"
+        ).
         setSmallIcon(R.drawable.ic_minus_foreground).setAutoCancel(true)
 
         val managerCompat = NotificationManagerCompat.from(context!!)
@@ -147,6 +148,7 @@ class MyFridgeFragment : Fragment() {
         } catch (e: Exception) {
             Log.d("Adapter", "Error")
         }
-
     }
+
+
 }
