@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
-import com.am.virtualfridge.db.FirebaseFridge.Companion.myRef
+import com.am.virtualfridge.db.FirebaseReceipts.Companion.myRef
 import com.am.virtualfridge.fridge.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

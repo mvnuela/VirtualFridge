@@ -16,7 +16,7 @@ class FirebaseReceipts {
     companion object {
         private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
         private val user = FirebaseAuth.getInstance().currentUser!!.uid
-        private var myRef = firebase.getReference("receipts").child(user)
+        val myRef = firebase.getReference("receipts").child(user)
 
         fun addReceipt(receipt: Receipt) {
             /**

@@ -2,19 +2,14 @@ package com.am.virtualfridge.receipts
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
 import com.am.virtualfridge.db.FirebaseReceipts
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val context: Context) : RecyclerView.Adapter<FavReceiptsAdapter.ViewHolder> (){
 
@@ -36,12 +31,12 @@ class FavReceiptsAdapter (private val receiptList:ArrayList<Receipt>, val contex
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem=receiptList[position]
         holder.nameOfReceipt.text=currentItem.name
-        holder.rootView.findViewById<Button>(R.id.goTo).setOnClickListener {
+        holder.rootView.findViewById<TextView>(R.id.receiptName).setOnClickListener {
             val intent = Intent(context, WebReceiptActivity::class.java)
             intent.putExtra("Url",currentItem.link)
             context.startActivity(intent)
         }
-        holder.rootView.findViewById<Button>(R.id.rm).setOnClickListener{
+        holder.rootView.findViewById<ImageView>(R.id.rm).setOnClickListener{
             FirebaseReceipts.deleteReceipt(currentItem)
         }
 
