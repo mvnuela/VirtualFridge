@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.am.virtualfridge.R
+import com.am.virtualfridge.db.FirebaseReceipts
 import com.am.virtualfridge.db.FirebaseReceipts.Companion.myRef
-import com.am.virtualfridge.fridge.Product
+import com.am.virtualfridge.db.FirebaseReceipts.Companion.user
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
@@ -26,7 +26,8 @@ class ReceiptsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_receipts, container, false)
-
+        user = FirebaseAuth.getInstance().currentUser!!.uid
+        myRef = FirebaseReceipts.firebase.getReference("receipts").child(user)
         recycler = view.findViewById<RecyclerView>(R.id.recyclerViewReceipts)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

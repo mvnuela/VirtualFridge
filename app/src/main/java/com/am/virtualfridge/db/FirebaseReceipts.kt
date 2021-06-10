@@ -14,9 +14,9 @@ class FirebaseReceipts {
      * metody odpowiedzialne za prawidlowa obsluge przepisow w firebasie
      */
     companion object {
-        private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        private val user = FirebaseAuth.getInstance().currentUser!!.uid
-        val myRef = firebase.getReference("receipts").child(user)
+        val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
+        var user = FirebaseAuth.getInstance().currentUser!!.uid
+        var myRef = firebase.getReference("receipts").child(user)
 
         fun addReceipt(receipt: Receipt) {
             /**
