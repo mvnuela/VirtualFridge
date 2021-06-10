@@ -17,8 +17,8 @@ class FirebaseFridge {
      */
     companion object {
         var username = MutableLiveData<String> ("")
-        private val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
-        val user = FirebaseAuth.getInstance().currentUser!!.uid
+        val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://virtualfridge-47aca-default-rtdb.europe-west1.firebasedatabase.app/")
+        var user = FirebaseAuth.getInstance().currentUser!!.uid
         var myRef = firebase.getReference("productsInFridge").child(user)
         fun addUpdateProduct(product: Product) {
             /**
